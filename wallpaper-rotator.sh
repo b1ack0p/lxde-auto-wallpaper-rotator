@@ -33,7 +33,7 @@ n=${#images[@]}
     wallpaper=${images[rand]}
 
     # Print the selected wallpaper and total image count
-    printf 'Using %s (Total image count: %d)\n' "$wallpaper" "$n"
+    printf 'Using %s (Total image count: %d)\n' "$wallpaper" "$n" | tee -a ~/wallpaper-rotator.debug
 
     # Set the wallpaper
     pcmanfm --set-wallpaper="$wallpaper" --wallpaper-mode=crop
