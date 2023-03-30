@@ -13,7 +13,7 @@ dirs=(
 extensions=("jpg" "jpeg" "png")
 
 # Set the time to change the wallpaper (in seconds)
-time_interval=5
+time_interval=600
 
 while true; do
   # Get the list of images with the specified extensions in the specified directories
@@ -33,7 +33,7 @@ n=${#images[@]}
     wallpaper=${images[rand]}
 
     # Print the selected wallpaper and total image count
-    printf 'Using %s (Total image count: %d)\n' "$wallpaper" "$n" | tee -a ~/wallpaper-rotator.debug
+    printf '[%s] [Total image count: %d] Using %s\n' "$(date +'%Y-%m-%d %I:%M:%S %p UTC:%Z')" "$n" "$wallpaper" | tee -a ~/wallpaper-rotator.log
 
     # Set the wallpaper
     pcmanfm --set-wallpaper="$wallpaper" --wallpaper-mode=crop
