@@ -33,7 +33,7 @@ while true; do
     wallpaper=${images[rand]}
 
     # Print the total image count and selected wallpaper with date and time
-    printf '[%s] [Total image count: %d] Setting image %s\n' "$(date +'%Y-%m-%d %r UTC %Z')" "$n" "$wallpaper" | tee -a ~/wallpaper-rotator.log
+    printf '[%s] [Total image count: %d] Using image: %s\n' "$(date +'%Y-%m-%d %r UTC %Z')" "$n" "$wallpaper" | tee -a ~/wallpaper-rotator.log
 
     # Set the wallpaper
     pcmanfm --set-wallpaper="$wallpaper" --wallpaper-mode=crop
