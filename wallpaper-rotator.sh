@@ -10,7 +10,7 @@ dirs=(
 )
 
 # Set the image file extensions to look for
-extensions=("jpg" "jpeg" "png")
+extensions=("jpg" "jpeg" "png" "bmp" "gif")
 
 # Set the time to change the wallpaper (in seconds)
 time_interval=600
