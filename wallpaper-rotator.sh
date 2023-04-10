@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-shopt -s extglob nullglob
+shopt -s extglob nullglob globstar
 
 # Set the directories to pick images from, separated by spaces
 dirs=(
@@ -16,11 +16,11 @@ extensions=("jpg" "jpeg" "png" "bmp" "gif")
 time_interval=600
 
 while true; do
-  # Get the list of images with the specified extensions in the specified directories
+  # Get the list of images with the specified extensions in the specified directories (including subdirectories)
   images=()
   for dir in "${dirs[@]}"; do
     for ext in "${extensions[@]}"; do
-      images+=("$dir"/*."$ext")
+      images+=("$dir"/**/*."$ext")
     done
   done
 
@@ -33,7 +33,7 @@ while true; do
     wallpaper=${images[rand]}
 
     # Print the total image count and selected wallpaper with date and time
-    printf '[%s] [Total image count: %d] Using image: %s\n' "$(date +'%Y-%m-%d %r UTC %Z')" "$n" "$wallpaper" | tee -a ~/wallpaper-rotator.log
+    printf '[%s] [Total image count: %d] Using image %s\n' "$(date +'%Y-%m-%d %r UTC %Z')" "$n" "$wallpaper" | tee -a ~/wallpaper-rotator.log
 
     # Set the wallpaper
     pcmanfm --set-wallpaper="$wallpaper" --wallpaper-mode=crop
