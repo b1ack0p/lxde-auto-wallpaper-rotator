@@ -74,7 +74,7 @@ if (( n > 0 )); then
   wallpaper=${images[rand]}
 
   # Get the aspect ratio of the selected image
-  image_aspect=$(identify -format "%[fx:w/h]" "$wallpaper")
+    image_aspect=$(identify -format "%[fx:w/h]" "$wallpaper")
 
   # Determine the wallpaper mode based on the aspect ratio
   if [[ $(bc -l <<<"$image_aspect == $screen_aspect") == 1 ]]; then
