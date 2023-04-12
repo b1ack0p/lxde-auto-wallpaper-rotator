@@ -16,7 +16,7 @@ extensions=("jpg" "jpeg" "png" "bmp")
 min_resolution="1050"
 
 # Set the time to change the wallpaper (in seconds)
-time_interval="600"
+time_interval="10"
 
 # Define the path to the file containing the eligible images
 eligible_images_file="$HOME/wallpaper-eligible-images.txt"
@@ -48,7 +48,7 @@ else
             echo "[$(date +'%Y-%m-%d %r UTC %Z')]" "Image $image has resolution of ${width}x${height} pixels, meets the minimum height required ($min_resolution pixels), adding to the list!" | tee -a $parser_log_file
             images+=("$image")
           else
-            echo "[$(date +'%Y-%m-%d %r UTC %Z')]" "Image $image has resolution of ${width}x${height} pixels, does not meet the height required ($min_resolution pixels), skipping..." | tee -a $parser_log_file
+            echo "[$(date +'%Y-%m-%d %r UTC %Z')]" "Image $image has resolution of ${width}x${height} pixels, does not meet the minimum height required ($min_resolution pixels), skipping..." | tee -a $parser_log_file
           fi
         fi
       done
@@ -64,38 +64,20 @@ while timeout 1 xwininfo -root -size >/dev/null 2>&1; do
   # Count the number of images
   n=${#images[@]}
 
-# Select a random image and loop
-if (( n > 0 )); then
-  rand=$(( RANDOM % n ))
-  wallpaper=${images[rand]}
+  # Select a random image and loop
+  if (( n > 0 )); then
+    rand=$(( RANDOM % n ))
+    wallpaper=${images[rand]}
+    
+    # Get the aspect ratio of the selected image
+    image_aspect=$(identify -format "%[fx:w/h]" "$wallpaper")
 
-  # Get the aspect ratio of the selected image
-  image_aspect=$(identify -format "%[fx:w/h]" "$wallpaper")
+    # Print the total image count and selected wallpaper with date and time
+    printf '[%s] [Total image count: %d] Using image %s [Resolution: %s, Aspect Ratio: %s]\n' "$(date +'%Y-%m-%d %r UTC %Z')" "$n" "$wallpaper" "$(identify -format '%wx%h' "$wallpaper")" "$image_aspect" | tee -a $log_file
 
-  # Determine the wallpaper mode based on the aspect ratio
-  # (e.g. aspect ratios: 16/10: 1.6, 16/9: 1.77778, 4/3: 1.33333, 3/2: 1.5, 5/4: 1.25, 1/1: 1)
-  if (( $(bc -l <<<"$aspect == 1.6") == 1 )); then
-    wallpaper_mode="fit"
-  elif (( $(bc -l <<<"$aspect == 1.77778") == 1 )); then
-    wallpaper_mode="crop"
-  elif (( $(bc -l <<<"$aspect == 1.33333") == 1 )); then
-    wallpaper_mode="center"
-  elif (( $(bc -l <<<"$aspect == 1.5") == 1 )); then
-    wallpaper_mode="screen"
-  elif (( $(bc -l <<<"$aspect == 1.25") == 1 )); then
-    wallpaper_mode="crop"
-  elif (( $(bc -l <<<"$aspect == 1") == 1 )); then
-    wallpaper_mode="crop"
-  else
-    wallpaper_mode="crop" # Default wallpaper mode for any other aspect ratio
+    # Set the wallpaper
+    pcmanfm --set-wallpaper="$wallpaper" --wallpaper-mode=crop
   fi
-
-  # Print the total image count and selected wallpaper with date, time and resolution
-  printf '[%s] [Total image count: %d] Using image as wallpaper: %s [Resolution: %s, Aspect Ratio: %s, Wallpaper Mode: %s]\n' "$(date +'%Y-%m-%d %r UTC %Z')" "$n" "$wallpaper" "$(identify -format '%wx%h' "$wallpaper")" "$image_aspect" "$wallpaper_mode" | tee -a "$log_file"
-
-  # Set the wallpaper
-  pcmanfm --set-wallpaper="$wallpaper" --wallpaper-mode="$wallpaper_mode"
-fi
 
   # Wait before changing the wallpaper again
   sleep $time_interval

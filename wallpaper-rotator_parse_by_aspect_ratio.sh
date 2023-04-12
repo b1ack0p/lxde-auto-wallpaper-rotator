@@ -12,7 +12,7 @@ dirs=(
 # Supported image file extensions to look for. (any image file extension supported by OS and Desktop Manager can be added)
 extensions=("jpg" "jpeg" "png" "bmp")
 
-# Set the minimum resolution limit (minimum HEIGHT in pixels)
+# Set the minimum resolution limit (HEIGHT in pixels)
 # Set to -1 to disable
 min_resolution="1050"
 
