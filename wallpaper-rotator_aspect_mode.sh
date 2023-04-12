@@ -15,6 +15,10 @@ extensions=("jpg" "jpeg" "png" "bmp")
 # Set the minimum resolution limit (HEIGHT in pixels). Set to -1 to disable.
 min_resolution="1050"
 
+# Set default screen aspect ratio
+# (e.g. aspect ratios: 16/10: 1.6, 16/9: 1.77778, 4/3: 1.33333, 3/2: 1.5, 5/4: 1.25, 1/1: 1)
+screen_aspect="1.6"
+
 # Set the time to change the wallpaper (in seconds)
 time_interval="600"
 
@@ -30,7 +34,7 @@ parser_log_file="$HOME/wallpaper-image-parser.log"
 # Check if the file exists and load it if it does
 if [[ -f "$eligible_images_file" ]]; then
   echo "Loading eligible images from file: $eligible_images_file"
-  readarray -t images < "$eligible_images_file"
+  mapfile -t images < "$eligible_images_file"
 else
   # Get the list of images with the specified extensions in the specified directories (including subdirectories)
   images=()
@@ -45,10 +49,10 @@ else
           width=$(echo "$resolution" | cut -d 'x' -f 1)
           height=$(echo "$resolution" | cut -d 'x' -f 2)
           if (( height >= min_resolution )); then
-            echo "[$(date +'%Y-%m-%d %r UTC %Z')]" "Image $image has resolution of ${width}x${height} pixels, meets the minimum height required ($min_resolution pixels), adding to the list!" | tee -a $parser_log_file
+            echo "[$(date +'%Y-%m-%d %r UTC %Z')]" "Image $image has resolution of ${width}x${height} pixels, meets the minimum height required ($min_resolution pixels), adding to the list!" | tee -a "$parser_log_file"
             images+=("$image")
           else
-            echo "[$(date +'%Y-%m-%d %r UTC %Z')]" "Image $image has resolution of ${width}x${height} pixels, does not meet the height required ($min_resolution pixels), skipping..." | tee -a $parser_log_file
+            echo "[$(date +'%Y-%m-%d %r UTC %Z')]" "Image $image has resolution of ${width}x${height} pixels, does not meet the height required ($min_resolution pixels), skipping..." | tee -a "$parser_log_file"
           fi
         fi
       done
@@ -73,18 +77,19 @@ if (( n > 0 )); then
   image_aspect=$(identify -format "%[fx:w/h]" "$wallpaper")
 
   # Determine the wallpaper mode based on the aspect ratio
-  # (e.g. aspect ratios: 16/10: 1.6, 16/9: 1.77778, 4/3: 1.33333, 3/2: 1.5, 5/4: 1.25, 1/1: 1)
-  if (( $(bc -l <<<"$aspect == 1.6") == 1 )); then
+  if [[ $(bc -l <<<"$image_aspect == $screen_aspect") == 1 ]]; then
     wallpaper_mode="fit"
-  elif (( $(bc -l <<<"$aspect == 1.77778") == 1 )); then
+  elif [[ $(bc -l <<<"$image_aspect == 1.6") == 1 ]]; then
     wallpaper_mode="crop"
-  elif (( $(bc -l <<<"$aspect == 1.33333") == 1 )); then
+  elif [[ $(bc -l <<<"$image_aspect == 1.77778") == 1 ]]; then
+    wallpaper_mode="crop"
+  elif [[ $(bc -l <<<"$image_aspect == 1.33333") == 1 ]]; then
     wallpaper_mode="center"
-  elif (( $(bc -l <<<"$aspect == 1.5") == 1 )); then
+  elif [[ $(bc -l <<<"$image_aspect == 1.5") == 1 ]]; then
     wallpaper_mode="screen"
-  elif (( $(bc -l <<<"$aspect == 1.25") == 1 )); then
+  elif [[ $(bc -l <<<"$image_aspect == 1.25") == 1 ]]; then
     wallpaper_mode="crop"
-  elif (( $(bc -l <<<"$aspect == 1") == 1 )); then
+  elif [[ $(bc -l <<<"$image_aspect == 1") == 1 ]]; then
     wallpaper_mode="crop"
   else
     wallpaper_mode="crop" # Default wallpaper mode for any other aspect ratio
