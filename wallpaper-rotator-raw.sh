@@ -16,7 +16,7 @@ extensions=("jpg" "jpeg" "png" "bmp")
 min_resolution="1050"
 
 # Set the time to change the wallpaper (in seconds)
-time_interval="10"
+time_interval="600"
 
 # Define the path to the file containing the eligible images
 eligible_images_file="$HOME/wallpaper-eligible-images.txt"
