@@ -12,7 +12,8 @@ dirs=(
 # Set the image file extensions to look for
 extensions=("jpg" "jpeg" "png" "bmp")
 
-# Set the minimum resolution limit (HEIGHT in pixels). Set to -1 to disable.
+# Set the minimum resolution limit (HEIGHT in pixels)
+# Set to -1 to disable.
 min_resolution="1050"
 
 # Set default screen aspect ratio
