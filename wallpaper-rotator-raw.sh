@@ -84,7 +84,7 @@ while timeout 1 xwininfo -root -size >/dev/null 2>&1; do
     image_aspect=$(identify -format "%[fx:w/h]" "$wallpaper")
 
     # Print the total image count and selected wallpaper with date and time
-    printf '[%s] [Total image count: %d] Using image %s [Resolution: %s, Aspect Ratio: %s, Wallpaper Mode: %s]\n' "$(date +'%Y-%m-%d %r UTC %Z')" "$n" "$wallpaper" "$(identify -format '%wx%h' "$wallpaper")" "$image_aspect" "$wallpaper_mode" | tee -a $log_file
+    printf '[%s] [Total image count: %d] Using image as wallpaper: %s [Resolution: %s, Aspect Ratio: %s, Wallpaper Mode: %s]\n' "$(date +'%Y-%m-%d %r UTC %Z')" "$n" "$wallpaper" "$(identify -format '%wx%h' "$wallpaper")" "$image_aspect" "$wallpaper_mode" | tee -a $log_file
 
     # Set the wallpaper
     pcmanfm --set-wallpaper="$wallpaper" --wallpaper-mode="$wallpaper_mode"
