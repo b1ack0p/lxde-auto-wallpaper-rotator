@@ -78,6 +78,13 @@ if (( n > 0 )); then
     image_aspect=$(identify -format "%[fx:w/h]" "$wallpaper")
 
   # Determine the wallpaper mode based on the aspect ratio
+  # LXDE PCmanfm wallpaper modes:
+  # 1. stretch: Stretch to fill the entire monitor area
+  # 2. fit: Stretch to fit the monitor area
+  # 3. center: Center unscaled image on the monitor
+  # 4. tile: Tile the image to fill the entire monitor area
+  # 5. crop: Stretch and crop to fill the monitor area
+  # 6. screen: Stretch to fill complete screen
   if [[ $(bc -l <<<"$image_aspect == $screen_aspect") == 1 ]]; then
     wallpaper_mode="fit"
   elif [[ $(bc -l <<<"$image_aspect == 1.6") == 1 ]]; then
