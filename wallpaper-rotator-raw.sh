@@ -1,4 +1,4 @@
-  #!/usr/bin/env bash
+#!/usr/bin/env bash
 
 shopt -s extglob nullglob globstar
 
@@ -18,6 +18,16 @@ min_resolution="1050"
 
 # Set the time to change the wallpaper (in seconds)
 time_interval="600"
+
+# Set wallpaper mode
+# LXDE PCManFM wallpaper modes:
+# 1. stretch: Stretch to fill the entire monitor area
+# 2. fit: Stretch to fit the monitor area
+# 3. center: Center unscaled image on the monitor
+# 4. tile: Tile the image to fill the entire monitor area
+# 5. crop: Stretch and crop to fill the monitor area
+# 6. screen: Stretch to fill complete screen
+wallpaper_mode="fit"
 
 # Define the path to the file containing the eligible images
 eligible_images_file="$HOME/wallpaper-eligible-images.txt"
@@ -74,10 +84,10 @@ while timeout 1 xwininfo -root -size >/dev/null 2>&1; do
     image_aspect=$(identify -format "%[fx:w/h]" "$wallpaper")
 
     # Print the total image count and selected wallpaper with date and time
-    printf '[%s] [Total image count: %d] Using image %s [Resolution: %s, Aspect Ratio: %s]\n' "$(date +'%Y-%m-%d %r UTC %Z')" "$n" "$wallpaper" "$(identify -format '%wx%h' "$wallpaper")" "$image_aspect" | tee -a $log_file
+    printf '[%s] [Total image count: %d] Using image %s [Resolution: %s, Aspect Ratio: %s, Wallpaper Mode: %s]\n' "$(date +'%Y-%m-%d %r UTC %Z')" "$n" "$wallpaper" "$(identify -format '%wx%h' "$wallpaper")" "$image_aspect" "$wallpaper_mode" | tee -a $log_file
 
     # Set the wallpaper
-    pcmanfm --set-wallpaper="$wallpaper" --wallpaper-mode=crop
+    pcmanfm --set-wallpaper="$wallpaper" --wallpaper-mode="$wallpaper_mode"
   fi
 
   # Wait before changing the wallpaper again
