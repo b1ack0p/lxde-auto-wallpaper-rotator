@@ -1,6 +1,8 @@
 # wallpaper-rotator
 
-Automatic desktop wallpaper rotator from specific picture path(s) for LXDE
+Automatic desktop wallpaper rotator from specific picture path(s) for LXDE.
+
+script looks for defined image file extensions from multiple directories and sub-directories.
 
 copy ```wallpaper-rotator.sh``` and ```services.sh``` anywhere you wish (by default paths inside .service file set to ```~/.local/bin/```)
 
