@@ -8,7 +8,7 @@ copy ```wallpaper-rotator.sh``` and ```services.sh``` anywhere you wish (by defa
 
 make dirs "systemd" and "user" as ```~/.config/systemd/user``` then copy ```wallpaper-rotator.service``` file in there.
 
-then make both .sh scripts executable with ```chmod +x wallpaper-rotator.sh``` and ```chmod +x services.sh``` then add ```@/home/$user/services.sh``` in ```/home/$user/.config/lxsession/LXDE/autostart``` to autostart the script.
+then make both .sh scripts executable with ```chmod +x wallpaper-rotator.sh``` and ```chmod +x services.sh``` then add ```@/home/$user/.local/bin/services.sh``` in ```/home/$user/.config/lxsession/LXDE/autostart``` to autostart the script.
 
 run ```systemctl --user start/stop/restart/status wallpaper-rotator.service``` to start/stop/restart and check status of the service.
 
