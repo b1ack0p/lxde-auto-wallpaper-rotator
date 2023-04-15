@@ -24,13 +24,13 @@ screen_aspect="1.6"
 time_interval="600"
 
 # Define the path to the file containing the eligible images
-eligible_images_file="$HOME/wallpaper-eligible-images.txt"
+eligible_images_file="$HOME/.local/bin/wallpaper-eligible-images.txt"
 
 # Define log file path
-log_file="$HOME/wallpaper-rotator.log"
+log_file="$HOME/.local/bin/wallpaper-rotator.log"
 
 # Define parser log file path
-parser_log_file="$HOME/wallpaper-image-parser.log"
+parser_log_file="$HOME/.local/bin/wallpaper-image-parser.log"
 
 # Check if the file exists and load it if it does
 if [[ -f "$eligible_images_file" ]]; then

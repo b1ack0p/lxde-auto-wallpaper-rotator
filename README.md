@@ -2,7 +2,7 @@
 
 Automatic desktop wallpaper rotator from specific picture path(s) for LXDE
 
-copy ```wallpaper-rotator.sh``` and ```services.sh``` anywhere you wish (by default paths inside .service file set to ```/home/$user/```)
+copy ```wallpaper-rotator.sh``` and ```services.sh``` anywhere you wish (by default paths inside .service file set to ```~/.local/bin/```)
 
 make dirs "systemd" and "user" as ```~/.config/systemd/user``` then copy ```wallpaper-rotator.service``` file in there.
 
