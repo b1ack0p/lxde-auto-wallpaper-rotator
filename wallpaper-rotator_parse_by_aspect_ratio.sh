@@ -79,7 +79,7 @@ while timeout 1 xwininfo -root -size >/dev/null 2>&1; do
     rand=$(( RANDOM % n ))
     wallpaper=${images[rand]}
     
-    # Get the aspect ratio of the selected image
+    # Get the aspect ratio of the selected image by using 'identify' command from ImageMagick
     image_aspect=$(identify -format "%[fx:w/h]" "$wallpaper")
 
     # Print the total image count and selected wallpaper with date, time and resolution

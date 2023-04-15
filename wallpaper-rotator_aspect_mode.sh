@@ -74,7 +74,7 @@ if (( n > 0 )); then
   rand=$(( RANDOM % n ))
   wallpaper=${images[rand]}
 
-  # Get the aspect ratio of the selected image
+  # Get the aspect ratio of the selected image by using 'identify' command from ImageMagick
     image_aspect=$(identify -format "%[fx:w/h]" "$wallpaper")
 
   # Determine the wallpaper mode based on the aspect ratio
