@@ -3,5 +3,5 @@ Description=rotate wallpaper
 PartOf=graphical-session.target
 
 [Service]
-ExecStart=%h/wallpaper-rotator.sh
+ExecStart=%h/.local/bin/wallpaper-rotator.sh
 Restart=on-failure
