@@ -10,7 +10,7 @@ dirs=(
 )
 
 # Set the image file extensions to look for
-extensions=("jpg" "jpeg" "png" "bmp")
+extensions=("jpg" "jpeg" "png" "bmp" "svg")
 
 # Set the minimum resolution limit (HEIGHT in pixels)
 # Set to -1 to disable.
